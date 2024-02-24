@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SDL2/SDL.h>
-
 #include "module.hpp"
 
 //#define NUM_KEYS 352

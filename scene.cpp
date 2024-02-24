@@ -1,6 +1,6 @@
 #include "scene.hpp"
 #include "engine.hpp"
-
+#include "SDL2/SDL_image.h"
 Scene::Scene() : Module()
 {
     name = "scene";
@@ -19,10 +19,47 @@ bool Scene::Awake()
     return ret;
 }
 
+// Load new texture from file path
+SDL_Texture* const Scene::Load(const char* path)
+{
+    SDL_Texture* texture = NULL;
+    SDL_Surface* surface = IMG_Load(path);
+
+    if(surface == NULL)
+    {
+        std::cerr << "Could not load surface with path" << std::endl;
+        //LOG("Could not load surface with path: %s. IMG_Load: %s", path, IMG_GetError());
+    }
+    else
+    {
+        texture = LoadSurface(surface);
+        SDL_FreeSurface(surface);
+    }
+
+    return texture;
+}
+
+SDL_Texture* const Scene::LoadSurface(SDL_Surface* surface)
+{
+
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
+
+    if(texture == NULL)
+    {
+        //LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
+    }
+    else
+    {
+        textures.remove(texture);
+    }
+
+    return texture;
+}
+
 // Called before the first frame
 bool Scene::Start()
 {
-    torchTex = App->tex->Load("textures/torch.png");
+    torchTex = Load("textures/torch.png");
     return true;
 }
 

@@ -35,10 +35,13 @@ public:
     // Called before quitting
     bool CleanUp();
 
+    SDL_Texture* const Load(const char* path);
+    SDL_Texture* const LoadSurface(SDL_Surface* surface);
 private:
 
     Emitter* eFire = nullptr;
     SDL_Rect rect = { 0, 0, 400, 400 };
     SDL_Texture* torchTex = nullptr;
+    std::list<SDL_Texture*>	textures;
 
 };

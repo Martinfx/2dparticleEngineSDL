@@ -15,7 +15,7 @@
 
 class Engine
 {
-
+public:
     // Called before render is available
     bool Awake();
 
@@ -36,14 +36,16 @@ class Engine
     const char* GetArgv(int index) const;
     const char* GetTitle() const;
     const char* GetOrganization() const;
+
 public:
     pugi::xml_node LoadEmitters(pugi::xml_document& psystem_file) const;
 
+    Engine() { }
+    Engine(Engine *App) ;
     Engine(int argc, char* args[]);
+    ~Engine();
 
 private:
-
-    ~Engine();
 
     // Load config file
     pugi::xml_node LoadConfig(pugi::xml_document&) const;
@@ -83,7 +85,7 @@ private:
     std::string			 title;
     std::string			 organization;
 
-    //j1PerfTimer			ptimer;
+    PerfTimer			ptimer;
     uint64_t				frame_count = 0;
     Timer				startup_time;
     Timer				frame_time;
@@ -92,6 +94,7 @@ private:
     uint32_t				prev_last_sec_frame_count = 0;
     float				dt = 0.0f;
     int					capped_ms = -1;
+
 };
 
-extern Engine* App;
+static Engine* App;

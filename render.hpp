@@ -43,6 +43,8 @@ public:
     // Set background color
     void SetBackgroundColor(SDL_Color color);
 
+    //sSDL_Texture* const LoadSurface(SDL_Surface* surface);
+
 public:
 
     SDL_Renderer*	renderer;

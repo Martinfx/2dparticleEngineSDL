@@ -3,8 +3,6 @@
 // Constructor
 Engine::Engine(int argc, char* args[])/* : argc(argc), args(args)*/
 {
-    //PERF_START(ptimer);
-
     input = new Input();
     win = new Window();
     render = new Render();
@@ -24,8 +22,6 @@ Engine::Engine(int argc, char* args[])/* : argc(argc), args(args)*/
 
     // Render last to swap buffer
     AddModule(render);
-
-    //PERF_PEEK(ptimer);
 }
 
 // Destructor
@@ -75,8 +71,8 @@ bool Engine::Awake()
     std::list<Module*>::const_iterator item;
 
     for (item = modules.begin(); item != modules.end() && ret == true; ++item)
-    {
-        //ret = (*item)->Awake(config.child((*item)->name.data()));
+    {   auto child = config.child((*item)->name.data());
+        ret = (*item)->Awake(child);
     }
 
    // PERF_PEEK(ptimer);
@@ -170,7 +166,7 @@ void Engine::FinishUpdate()
   /*  std::sprintf(title, 256, "Av.FPS: %.2f Last Frame Ms: %u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %lu ",
               avg_fps, last_frame_ms, frames_on_last_update, dt, seconds_since_startup, frame_count);
 */
-    App->win->SetTitle(title);
+    //App->win->SetTitle(title);
 
     if (capped_ms > 0 && last_frame_ms < capped_ms)
     {

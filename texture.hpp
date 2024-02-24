@@ -2,8 +2,9 @@
 
 #include "module.hpp"
 #include <list>
+#include <SDL2/SDL.h>
 
-struct SDL_Texture;
+//struct SDL_Texture;
 struct SDL_Surface;
 
 class Textures : public Module

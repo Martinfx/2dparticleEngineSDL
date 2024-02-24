@@ -311,3 +311,20 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 
     return ret;
 }
+/*
+SDL_Texture* const Render::LoadSurface(SDL_Surface* surface)
+{
+
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
+
+    if(texture == NULL)
+    {
+        //LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
+    }
+    else
+    {
+        texture->remove(texture);
+    }
+
+    return texture;
+}*/

@@ -60,6 +60,7 @@ SDL_Texture* const Textures::Load(const char* path)
 
     if(surface == NULL)
     {
+        std::cerr << "Could not load surface with path" << std::endl;
         //LOG("Could not load surface with path: %s. IMG_Load: %s", path, IMG_GetError());
     }
     else
