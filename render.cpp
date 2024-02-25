@@ -5,6 +5,9 @@
 
 Render::Render() : Module()
 {
+    window = NULL;
+    screen_surface = NULL;
+
     name = "renderer";
     background.r = 0;
     background.g = 0;
@@ -13,13 +16,77 @@ Render::Render() : Module()
 }
 
 Render::~Render()
-{}
+{
+    if(window != NULL)
+    {
+        SDL_DestroyWindow(window);
+    }
+
+    //Quit SDL subsystems
+    SDL_Quit();
+}
+
 
 // Called before render is available
 bool Render::Awake(pugi::xml_node& config)
 {
-    //LOG("Create SDL rendering context");
     bool ret = true;
+
+    if(SDL_Init(SDL_INIT_VIDEO) < 0)
+    {
+        std::cerr << "SDL_VIDEO could not initialize! SDL_Error: %s\n" << SDL_GetError();
+        ret = false;
+    }
+    else
+    {
+        //Create window
+        Uint32 flags = SDL_WINDOW_SHOWN;
+        bool fullscreen = config.child("fullscreen").attribute("value").as_bool(false);
+        bool borderless = config.child("borderless").attribute("value").as_bool(false);
+        bool resizable = config.child("resizable").attribute("value").as_bool(false);
+        bool fullscreen_window = config.child("fullscreen_window").attribute("value").as_bool(false);
+
+        width = config.child("resolution").attribute("width").as_int(640);
+        height = config.child("resolution").attribute("height").as_int(480);
+        scale = config.child("resolution").attribute("scale").as_int(1);
+
+        if(fullscreen == true)
+        {
+            flags |= SDL_WINDOW_FULLSCREEN;
+        }
+
+        if(borderless == true)
+        {
+            flags |= SDL_WINDOW_BORDERLESS;
+        }
+
+        if(resizable == true)
+        {
+            flags |= SDL_WINDOW_RESIZABLE;
+        }
+
+        if(fullscreen_window == true)
+        {
+            flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+        }
+
+        window = SDL_CreateWindow("2D Engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
+
+        if(window == NULL)
+        {
+            std::cerr << "Window could not be created! SDL_Error: %s\n" << SDL_GetError();
+            ret = false;
+        }
+        else
+        {
+            //Get window surface
+            screen_surface = SDL_GetWindowSurface(window);
+        }
+    }
+
+
+    //LOG("Create SDL rendering context");
+   // bool ret = true;
     // load flags
     Uint32 flags = SDL_RENDERER_ACCELERATED;
 
@@ -29,17 +96,18 @@ bool Render::Awake(pugi::xml_node& config)
         //LOG("Using vsync");
     }
 
-    renderer = SDL_CreateRenderer(App->win->window, -1, flags);
+    renderer = SDL_CreateRenderer(window, -1, flags);
 
     if(renderer == NULL)
     {
         //LOG("Could not create the renderer! SDL_Error: %s\n", SDL_GetError());
-        ret = false;
+        std::cerr << "Could not create the renderer! SDL_Error: %s\n" << SDL_GetError();
+                ret = false;
     }
     else
     {
-        camera.w = App->win->screen_surface->w;
-        camera.h = App->win->screen_surface->h;
+        camera.w = screen_surface->w;
+        camera.h = screen_surface->h;
         camera.x = 0;
         camera.y = 0;
     }
@@ -122,7 +190,7 @@ void Render::ResetViewPort()
 bool Render::BlitParticle(SDL_Texture* texture, int x, int y, const SDL_Rect* section, const SDL_Rect* rectSize, float speed, double angle) const
 {
     bool ret = true;
-    uint scale = App->win->GetScale();
+    uint scale = GetScale();
 
     SDL_Rect rect;
     rect.x = (int)(camera.x * speed) + x * scale;
@@ -166,7 +234,7 @@ bool Render::BlitParticle(SDL_Texture* texture, int x, int y, const SDL_Rect* se
 bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y) const
 {
     bool ret = true;
-    uint scale = App->win->GetScale();
+    uint scale = GetScale();
 
     SDL_Rect rect;
     rect.x = (int)(camera.x * speed) + x * scale;
@@ -208,7 +276,7 @@ bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, f
 bool Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera) const
 {
     bool ret = true;
-    uint scale = App->win->GetScale();
+    uint scale = GetScale();
 
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     SDL_SetRenderDrawColor(renderer, r, g, b, a);
@@ -236,7 +304,7 @@ bool Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, 
 bool Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera) const
 {
     bool ret = true;
-    uint scale = App->win->GetScale();
+    uint scale = GetScale();
 
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     SDL_SetRenderDrawColor(renderer, r, g, b, a);
@@ -260,7 +328,7 @@ bool Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b,
 bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera) const
 {
     bool ret = true;
-    uint scale = App->win->GetScale();
+    uint scale = GetScale();
 
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     SDL_SetRenderDrawColor(renderer, r, g, b, a);
@@ -328,3 +396,8 @@ SDL_Texture* const Render::LoadSurface(SDL_Surface* surface)
 
     return texture;
 }*/
+
+uint Render::GetScale() const
+{
+    return scale;
+}

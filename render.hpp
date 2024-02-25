@@ -44,7 +44,24 @@ public:
     void SetBackgroundColor(SDL_Color color);
 
     //sSDL_Texture* const LoadSurface(SDL_Surface* surface);
+    uint GetScale() const;
 
+
+public:
+    //The window we'll be rendering to
+    SDL_Window* window;
+
+    //The surface contained by the window
+    SDL_Surface* screen_surface;
+
+private:
+    std::string	title;
+    std::string	icon;
+
+    // Screen parameters
+    uint		width = 0u;
+    uint		height = 0u;
+    uint		scale = 0u;
 public:
 
     SDL_Renderer*	renderer;

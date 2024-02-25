@@ -4,7 +4,7 @@
 Engine::Engine(int argc, char* args[])/* : argc(argc), args(args)*/
 {
     input = new Input();
-    win = new Window();
+   // win = new Window();
     render = new Render();
     tex = new Textures();
     psystem = new ParticleSystem();
@@ -14,7 +14,7 @@ Engine::Engine(int argc, char* args[])/* : argc(argc), args(args)*/
     // Ordered for awake / Start / Update
     // Reverse order of CleanUp
     AddModule(input);
-    AddModule(win);
+   // AddModule(win);
     AddModule(tex);
     AddModule(scene);
     AddModule(psystem);
@@ -167,6 +167,7 @@ void Engine::FinishUpdate()
               avg_fps, last_frame_ms, frames_on_last_update, dt, seconds_since_startup, frame_count);
 */
     //App->win->SetTitle(title);
+    //win->SetTitle(title);
 
     if (capped_ms > 0 && last_frame_ms < capped_ms)
     {

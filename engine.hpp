@@ -40,8 +40,6 @@ public:
 public:
     pugi::xml_node LoadEmitters(pugi::xml_document& psystem_file) const;
 
-    Engine() { }
-    Engine(Engine *App) ;
     Engine(int argc, char* args[]);
     ~Engine();
 
@@ -68,7 +66,7 @@ private:
 public:
 
     // Modules
-    Window*			 win = nullptr;
+    //Window*			 win = nullptr;
     Input*			 input = nullptr;
     Render*			 render = nullptr;
     Textures*			 tex = nullptr;
