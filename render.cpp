@@ -131,17 +131,17 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
-    /**if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-    {
-        int mx, my;
-        App->input->GetMousePosition(mx, my);
-        fPoint pos((float)mx, (float)my);
-        pos.y -= 230.0f;
-        eFire = App->psystem->AddEmiter(pos, EmitterType::EMITTER_TYPE_FIRE);
-    }
+    //if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+    //{
+    //    int mx, my;
+    //    App->input->GetMousePosition(mx, my);
+    //    fPoint pos((float)mx, (float)my);
+     //   pos.y -= 230.0f;
+       // eFire = App->psystem->AddEmiter(pos, EmitterType::EMITTER_TYPE_FIRE);
+    //}
 
     int mx, my;
-    App->input->GetMousePosition(mx, my);
+    //App->input->GetMousePosition(mx, my);
     fPoint pos((float)mx, (float)my);
 
     Blit(torchTex, pos.x - 43, pos.y - 270, &rect);
@@ -149,11 +149,11 @@ bool Render::Update(float dt)
     if (eFire != nullptr)
     {
         int mx, my;
-        App->input->GetMousePosition(mx, my);
+     //   App->input->GetMousePosition(mx, my);
         fPoint pos((float)mx, (float)my);
         pos.y -= 230.0f;
         eFire->MoveEmitter(pos);
-    }*/
+    }
 
 
     return true;

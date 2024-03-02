@@ -22,7 +22,8 @@ bool ParticleSystem::Awake(pugi::xml_node& config)
     pugi::xml_node node = App->LoadEmitters(psystem_config);
     nameParticleAtlas = node.child("particleAtlas").attribute("name").as_string();
 
-    for (pugi::xml_node emitters = node.child("particleAtlas").child("emitter"); emitters && ret; emitters = emitters.next_sibling("emitter"))
+    for (pugi::xml_node emitters = node.child("particleAtlas").child("emitter");
+         emitters && ret; emitters = emitters.next_sibling("emitter"))
     {
         /* TODO 1: Load emitter data into the emitter data vector:
             - We just want to load the emitter data from the fire emitter for now.
