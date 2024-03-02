@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <list>
 #include <pugixml.hpp>
+#include <climits>
 
 #include "module.hpp"
 #include "window.hpp"
