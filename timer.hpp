@@ -1,5 +1,5 @@
 #pragma once
-#include "stddef.h"
+#include <cstdint>
 
 
 class Timer
@@ -9,9 +9,9 @@ public:
     Timer();
 
     void Start();
-    uint32_t Read() const;
+    std::uint32_t Read() const;
     float ReadSec() const;
 
 private:
-    uint32_t	started_at;
+    std::uint32_t	started_at;
 };

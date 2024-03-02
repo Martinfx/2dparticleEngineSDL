@@ -11,7 +11,7 @@ void Timer::Start()
     started_at = SDL_GetTicks();
 }
 
-uint32_t Timer::Read() const
+std::uint32_t Timer::Read() const
 {
     return SDL_GetTicks() - started_at;
 }
