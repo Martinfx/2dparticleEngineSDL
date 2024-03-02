@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stddef.h>
+#include <cstdint>
 
 class PerfTimer
 {
@@ -10,9 +10,9 @@ public:
 
     void Start();
     double ReadMs() const;
-    uint64_t ReadTicks() const;
+    std::uint64_t ReadTicks() const;
 
 private:
-    uint64_t	started_at;
-    static uint64_t frequency;
+    std::uint64_t	started_at;
+    static std::uint64_t frequency;
 };

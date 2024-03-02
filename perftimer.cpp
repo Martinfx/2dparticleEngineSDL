@@ -25,7 +25,7 @@ double PerfTimer::ReadMs() const
 }
 
 // ---------------------------------------------
-uint64_t PerfTimer::ReadTicks() const
+std::uint64_t PerfTimer::ReadTicks() const
 {
     return SDL_GetPerformanceCounter() - started_at;
 }
