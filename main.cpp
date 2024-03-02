@@ -100,6 +100,7 @@ int main(int argc, char* args[])
                 // Exit with errors and shame ---------------------------------------
             case FAIL:
                 std::cerr << "Exiting with errors :(";
+                delete Application;
                 result = EXIT_FAILURE;
                 state = EXIT;
                 break;

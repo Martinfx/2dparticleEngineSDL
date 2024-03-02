@@ -52,7 +52,6 @@ class ParticleSystem : public Module
 private:
 
     std::list<Emitter*> emittersList;
-    SDL_Texture* particleAtlas = nullptr;
     std::string nameParticleAtlas;
 
     // Static array that stores all the data of emitters

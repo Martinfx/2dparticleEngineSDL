@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+# CMake
+*.txt.user
+CMakeCache.txt
+CMakeFiles/*
+cmake_install.cmake
+ParticleSystem2SDL
+*.core

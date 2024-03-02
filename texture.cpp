@@ -33,6 +33,7 @@ bool Textures::Start()
 {
    // LOG("start textures");
     bool ret = true;
+   particleAtlas = Load("nameParticleAtlas");
     return ret;
 }
 
@@ -87,6 +88,7 @@ bool Textures::UnLoad(SDL_Texture* texture)
         }
     }
 
+    UnLoad(particleAtlas);
     return false;
 }
 
@@ -112,3 +114,9 @@ void Textures::GetSize(const SDL_Texture* texture, uint& width, uint& height) co
 {
     SDL_QueryTexture((SDL_Texture*)texture, NULL, NULL, (int*) &width, (int*) &height);
 }
+
+SDL_Texture* Textures::GetParticleAtlas() const
+{
+    return particleAtlas;
+}
+

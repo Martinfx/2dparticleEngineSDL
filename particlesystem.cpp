@@ -35,8 +35,6 @@ bool ParticleSystem::Awake(pugi::xml_node& config)
 
 bool ParticleSystem::Start()
 {
-    particleAtlas = App->tex->Load(nameParticleAtlas.c_str());
-
     return true;
 }
 
@@ -87,7 +85,6 @@ bool ParticleSystem::CleanUp()
     }
 
     emittersList.clear();
-    App->tex->UnLoad(particleAtlas);
 
     return true;
 }
@@ -130,11 +127,6 @@ bool ParticleSystem::RemoveAllEmitters()
     }
 
     return ret;
-}
-
-SDL_Texture* ParticleSystem::GetParticleAtlas() const
-{
-    return particleAtlas;
 }
 
 void ParticleSystem::LoadEmitterData(pugi::xml_node & emitter, EmitterType type)

@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL.h>
 #include "module.hpp"
+#include "emitter.hpp"
 
 class Render : public Module
 {
@@ -46,13 +47,14 @@ public:
     //sSDL_Texture* const LoadSurface(SDL_Surface* surface);
     uint GetScale() const;
 
-
-public:
     //The window we'll be rendering to
     SDL_Window* window;
 
     //The surface contained by the window
     SDL_Surface* screen_surface;
+
+    SDL_Texture* const Load(const char* path);
+    SDL_Texture* const LoadSurface(SDL_Surface* surface);
 
 private:
     std::string	title;
@@ -62,6 +64,12 @@ private:
     uint		width = 0u;
     uint		height = 0u;
     uint		scale = 0u;
+
+    Emitter* eFire = nullptr;
+    SDL_Rect rect = { 0, 0, 400, 400 };
+    SDL_Texture* torchTex = nullptr;
+    std::list<SDL_Texture*>	textures;
+
 public:
 
     SDL_Renderer*	renderer;

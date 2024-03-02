@@ -30,7 +30,7 @@ add_executable(ParticleSystem2SDL main.cpp
     particle.hpp particle.cpp
     scene.hpp scene.cpp
     timer.hpp timer.cpp )
-target_link_libraries(ParticleSystem2SDL ${SDL2_LIBRARIES} SDL2_image::SDL2_image -lpugixml )
+target_link_libraries(ParticleSystem2SDL ${SDL2_LIBRARIES} -lSDL2_image -lpugixml )
 
 include(GNUInstallDirs)
 install(TARGETS ParticleSystem2SDL

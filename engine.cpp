@@ -8,7 +8,7 @@ Engine::Engine(int argc, char* args[])/* : argc(argc), args(args)*/
     render = new Render();
     tex = new Textures();
     psystem = new ParticleSystem();
-    scene = new Scene();
+   // scene = new Scene();
 
 
     // Ordered for awake / Start / Update
@@ -16,7 +16,7 @@ Engine::Engine(int argc, char* args[])/* : argc(argc), args(args)*/
     AddModule(input);
    // AddModule(win);
     AddModule(tex);
-    AddModule(scene);
+   // AddModule(scene);
     AddModule(psystem);
 
 
@@ -299,3 +299,4 @@ pugi::xml_node Engine::LoadEmitters(pugi::xml_document& psystem_file) const
         ret = psystem_file.child("emitters");
     return ret;
 }
+Engine *App;

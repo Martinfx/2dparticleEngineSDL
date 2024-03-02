@@ -40,6 +40,7 @@ public:
 public:
     pugi::xml_node LoadEmitters(pugi::xml_document& psystem_file) const;
 
+    Engine() {}
     Engine(int argc, char* args[]);
     ~Engine();
 
@@ -95,4 +96,4 @@ private:
 
 };
 
-static Engine* App;
+extern Engine* App;

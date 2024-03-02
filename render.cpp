@@ -1,6 +1,8 @@
 #include "render.hpp"
 #include "engine.hpp"
 
+#include <SDL2/SDL_image.h>
+
 #define VSYNC true
 
 Render::Render() : Module()
@@ -17,13 +19,7 @@ Render::Render() : Module()
 
 Render::~Render()
 {
-    if(window != NULL)
-    {
-        SDL_DestroyWindow(window);
-    }
 
-    //Quit SDL subsystems
-    SDL_Quit();
 }
 
 
@@ -80,7 +76,7 @@ bool Render::Awake(pugi::xml_node& config)
         else
         {
             //Get window surface
-            screen_surface = SDL_GetWindowSurface(window);
+           // screen_surface = SDL_GetWindowSurface(window);
         }
     }
 
@@ -106,8 +102,8 @@ bool Render::Awake(pugi::xml_node& config)
     }
     else
     {
-        camera.w = screen_surface->w;
-        camera.h = screen_surface->h;
+        camera.w = 800;
+        camera.h = 600;
         camera.x = 0;
         camera.y = 0;
     }
@@ -120,6 +116,8 @@ bool Render::Start()
 {
     //LOG("render start");
     // back background
+    torchTex = Load("textures/torch.png");
+
     SDL_RenderGetViewport(renderer, &viewport);
     return true;
 }
@@ -133,11 +131,44 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
+    if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+    {
+        int mx, my;
+        App->input->GetMousePosition(mx, my);
+        fPoint pos((float)mx, (float)my);
+        pos.y -= 230.0f;
+        eFire = App->psystem->AddEmiter(pos, EmitterType::EMITTER_TYPE_FIRE);
+    }
+
+    /*TODO 5 - Tweak the xml parameters
+        - Change the emitter data in order to get a flame.
+        - Uncomment code in Scene update to blit the torch.
+        - Optional: create a new one and try simulate smoke.*/
+
+    int mx, my;
+    App->input->GetMousePosition(mx, my);
+    fPoint pos((float)mx, (float)my);
+
+    Blit(torchTex, pos.x - 43, pos.y - 270, &rect);
+
+    if (eFire != nullptr)
+    {
+        int mx, my;
+        App->input->GetMousePosition(mx, my);
+        fPoint pos((float)mx, (float)my);
+        pos.y -= 230.0f;
+        eFire->MoveEmitter(pos);
+    }
+
+
     return true;
 }
 
 bool Render::PostUpdate()
-{
+{    bool ret = true;
+    if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+        ret = false;
+
     SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
     SDL_RenderPresent(renderer);
     return true;
@@ -146,6 +177,18 @@ bool Render::PostUpdate()
 // Called before quitting
 bool Render::CleanUp()
 {
+    eFire = nullptr;
+
+    App->tex->UnLoad(torchTex);
+    torchTex = nullptr;
+
+    if(window != NULL)
+    {
+        SDL_DestroyWindow(window);
+    }
+
+    //Quit SDL subsystems
+    SDL_Quit();
     ///LOG("Destroying SDL render");
     SDL_DestroyRenderer(renderer);
     return true;
@@ -379,11 +422,31 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 
     return ret;
 }
-/*
+
+// Load new texture from file path
+SDL_Texture* const Render::Load(const char* path)
+{
+    SDL_Texture* texture = NULL;
+    SDL_Surface* surface = IMG_Load(path);
+
+    if(surface == NULL)
+    {
+        std::cerr << "Could not load surface with path" << std::endl;
+        //LOG("Could not load surface with path: %s. IMG_Load: %s", path, IMG_GetError());
+    }
+    else
+    {
+        texture = LoadSurface(surface);
+        SDL_FreeSurface(surface);
+    }
+
+    return texture;
+}
+
 SDL_Texture* const Render::LoadSurface(SDL_Surface* surface)
 {
 
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
     if(texture == NULL)
     {
@@ -391,12 +454,11 @@ SDL_Texture* const Render::LoadSurface(SDL_Surface* surface)
     }
     else
     {
-        texture->remove(texture);
+        textures.remove(texture);
     }
 
     return texture;
-}*/
-
+}
 uint Render::GetScale() const
 {
     return scale;
