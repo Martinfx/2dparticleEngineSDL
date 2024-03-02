@@ -122,7 +122,7 @@ bool Scene::CleanUp()
 
     eFire = nullptr;
 
-    App->tex->UnLoad(torchTex);
+    //UnLoad(torchTex);
     torchTex = nullptr;
 
     return true;

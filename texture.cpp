@@ -1,7 +1,6 @@
 #include "texture.hpp"
 #include "SDL2/SDL_image.h"
 #include "engine.hpp"
-
 Textures::Textures() : Module()
 {
     name = "textures";
@@ -33,7 +32,7 @@ bool Textures::Start()
 {
    // LOG("start textures");
     bool ret = true;
-   particleAtlas = Load("nameParticleAtlas");
+   particleAtlas = Load("textures/particles.png");
     return ret;
 }
 
@@ -61,7 +60,7 @@ SDL_Texture* const Textures::Load(const char* path)
 
     if(surface == NULL)
     {
-        std::cerr << "Could not load surface with path" << std::endl;
+        //std::cerr << "Could not load surface with path" << std::endl;
         //LOG("Could not load surface with path: %s. IMG_Load: %s", path, IMG_GetError());
     }
     else

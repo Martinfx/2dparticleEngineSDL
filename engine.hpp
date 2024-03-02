@@ -9,7 +9,7 @@
 #include "window.hpp"
 #include "input.hpp"
 #include "render.hpp"
-#include "texture.hpp"
+//#include "texture.hpp"
 #include "particlesystem.hpp"
 #include "scene.hpp"
 #include "timer.hpp"
@@ -71,7 +71,7 @@ public:
     //Window*			 win = nullptr;
     Input*			 input = nullptr;
     Render*			 render = nullptr;
-    Textures*			 tex = nullptr;
+    //Textures*			 tex = nullptr;
     ParticleSystem*	 psystem = nullptr;
     Scene*			 scene = nullptr;
 

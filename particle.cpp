@@ -77,7 +77,7 @@ void Particle::Draw()
     */
 
     // Blitting particle on screen
-    App->render->BlitParticle(App->tex->GetParticleAtlas(), (int)centerX, (int)centerY, &pState.pLive.pRect, &pState.pLive.rectSize, 1.0f, pState.pLive.currentRotSpeed);
+    App->render->BlitParticle(App->render->GetParticleAtlas(), (int)centerX, (int)centerY, &pState.pLive.pRect, &pState.pLive.rectSize, 1.0f, pState.pLive.currentRotSpeed);
 
     // Calculating new rotation according to rotation speed
     pState.pLive.currentRotSpeed += pState.pLive.startRotSpeed;

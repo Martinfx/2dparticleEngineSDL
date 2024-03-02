@@ -55,7 +55,10 @@ public:
 
     SDL_Texture* const Load(const char* path);
     SDL_Texture* const LoadSurface(SDL_Surface* surface);
-
+    bool				UnLoad(SDL_Texture* texture);
+    void				GetSize(const SDL_Texture* texture, uint& width, uint& height) const;
+    SDL_Texture* GetParticleAtlas() const;
+    SDL_Texture* particleAtlas = nullptr;
 private:
     std::string	title;
     std::string	icon;

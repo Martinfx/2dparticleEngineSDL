@@ -131,7 +131,7 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
-    if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+    /**if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
     {
         int mx, my;
         App->input->GetMousePosition(mx, my);
@@ -139,11 +139,6 @@ bool Render::Update(float dt)
         pos.y -= 230.0f;
         eFire = App->psystem->AddEmiter(pos, EmitterType::EMITTER_TYPE_FIRE);
     }
-
-    /*TODO 5 - Tweak the xml parameters
-        - Change the emitter data in order to get a flame.
-        - Uncomment code in Scene update to blit the torch.
-        - Optional: create a new one and try simulate smoke.*/
 
     int mx, my;
     App->input->GetMousePosition(mx, my);
@@ -158,7 +153,7 @@ bool Render::Update(float dt)
         fPoint pos((float)mx, (float)my);
         pos.y -= 230.0f;
         eFire->MoveEmitter(pos);
-    }
+    }*/
 
 
     return true;
@@ -166,8 +161,8 @@ bool Render::Update(float dt)
 
 bool Render::PostUpdate()
 {    bool ret = true;
-    if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-        ret = false;
+   // if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+    //    ret = false;
 
     SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
     SDL_RenderPresent(renderer);
@@ -179,7 +174,7 @@ bool Render::CleanUp()
 {
     eFire = nullptr;
 
-    App->tex->UnLoad(torchTex);
+    UnLoad(torchTex);
     torchTex = nullptr;
 
     if(window != NULL)
@@ -450,6 +445,7 @@ SDL_Texture* const Render::LoadSurface(SDL_Surface* surface)
 
     if(texture == NULL)
     {
+        std::cerr << "Unable to create texture from surface! SDL Error: %s\n" << SDL_GetError();
         //LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
     }
     else
@@ -463,3 +459,33 @@ uint Render::GetScale() const
 {
     return scale;
 }
+
+// Retrieve size of a texture
+void Render::GetSize(const SDL_Texture* texture, uint& width, uint& height) const
+{
+    SDL_QueryTexture((SDL_Texture*)texture, NULL, NULL, (int*) &width, (int*) &height);
+}
+
+bool Render::UnLoad(SDL_Texture* texture)
+{
+    std::list<SDL_Texture*>::const_iterator item;
+
+    for (item = textures.begin(); item != textures.end(); item = ++item)
+    {
+        if (texture == *item)
+        {
+            SDL_DestroyTexture(*item);
+            textures.remove(*item);
+            return true;
+        }
+    }
+
+    UnLoad(particleAtlas);
+    return false;
+}
+
+SDL_Texture* Render::GetParticleAtlas() const
+{
+    return particleAtlas;
+}
+

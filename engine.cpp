@@ -6,7 +6,7 @@ Engine::Engine(int argc, char* args[])/* : argc(argc), args(args)*/
     input = new Input();
    // win = new Window();
     render = new Render();
-    tex = new Textures();
+   // tex = new Textures();
     psystem = new ParticleSystem();
    // scene = new Scene();
 
@@ -15,7 +15,7 @@ Engine::Engine(int argc, char* args[])/* : argc(argc), args(args)*/
     // Reverse order of CleanUp
     AddModule(input);
    // AddModule(win);
-    AddModule(tex);
+   // AddModule(tex);
    // AddModule(scene);
     AddModule(psystem);
 
@@ -171,7 +171,8 @@ void Engine::FinishUpdate()
 
     if (capped_ms > 0 && last_frame_ms < capped_ms)
     {
-        PerfTimer t;
+        //PerfTimer t;
+        //textures.remove(texture);
        // SDL_Delay(capped_ms - last_frame_ms);
        // LOG("We waited for %d milliseconds and got back in %f", capped_ms - last_frame_ms, t.ReadMs());
     }
