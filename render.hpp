@@ -1,5 +1,5 @@
 #pragma once
-
+#include <climits>
 #include <SDL2/SDL.h>
 #include "module.hpp"
 #include "emitter.hpp"
