@@ -133,14 +133,14 @@ bool Render::Update(float dt)
 {
     //if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
     //{
-    //    int mx, my;
+        int mxx = 0, myy = 0;
     //    App->input->GetMousePosition(mx, my);
-    //    fPoint pos((float)mx, (float)my);
+        fPoint poss((float)mxx, (float)myy);
      //   pos.y -= 230.0f;
-       // eFire = App->psystem->AddEmiter(pos, EmitterType::EMITTER_TYPE_FIRE);
+        ///eFire = App->psystem->AddEmiter(poss, EmitterType::EMITTER_TYPE_FIRE);
     //}
 
-    int mx, my;
+    int mx = 200, my = 300;
     //App->input->GetMousePosition(mx, my);
     fPoint pos((float)mx, (float)my);
 
@@ -303,7 +303,7 @@ bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, f
 
     if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, SDL_FLIP_NONE) != 0)
     {
-        //LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+        std::cerr << "Cannot blit to screen. SDL_RenderCopy error: %s" <<  SDL_GetError();
         ret = false;
     }
 

@@ -35,7 +35,7 @@ bool ParticleSystem::Awake(pugi::xml_node& config)
             LoadEmitterData(emitters, EMITTER_TYPE_FIRE);
             // TODO 2: Vytvoření a přidání emitteru do seznamu emiterů
             // Použijte AddEmitter() metodu a předejte potřebné parametry, jako je pozice a typ emiteru
-            AddEmiter(fPoint(20.0f, 20.0f), EMITTER_TYPE_FIRE);
+            AddEmiter(fPoint(200.0f, 330.0f), EMITTER_TYPE_FIRE);
         }
     }
     return ret;
