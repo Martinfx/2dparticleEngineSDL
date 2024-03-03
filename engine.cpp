@@ -173,8 +173,8 @@ void Engine::FinishUpdate()
     {
         //PerfTimer t;
         //textures.remove(texture);
-       // SDL_Delay(capped_ms - last_frame_ms);
-       // LOG("We waited for %d milliseconds and got back in %f", capped_ms - last_frame_ms, t.ReadMs());
+         SDL_Delay(capped_ms - last_frame_ms);
+       //"We waited for %d milliseconds and got back in %f", capped_ms - last_frame_ms, t.ReadMs());
     }
 }
 
@@ -288,16 +288,5 @@ const char* Engine::GetOrganization() const
     return organization.data();
 }
 
-pugi::xml_node Engine::LoadEmitters(pugi::xml_document& psystem_file) const
-{
-    pugi::xml_node ret;
 
-    pugi::xml_parse_result result = psystem_file.load_file("psystem_config");
-
-    /*if (result == NULL)
-        LOG("Could not load xml file config.xml. pugi error: %s", result.description());
-    else*/
-        ret = psystem_file.child("emitters");
-    return ret;
-}
 Engine *App;

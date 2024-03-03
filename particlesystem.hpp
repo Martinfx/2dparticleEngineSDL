@@ -89,4 +89,6 @@ public:
 
     SDL_Texture* GetParticleAtlas() const;
     void LoadEmitterData(pugi::xml_node& config, EmitterType type);
+
+    pugi::xml_node LoadEmitters(pugi::xml_document& psystem_file) const;
 };

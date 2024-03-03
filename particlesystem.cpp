@@ -19,7 +19,7 @@ bool ParticleSystem::Awake(pugi::xml_node& config)
     bool ret = true;
 
     pugi::xml_document	psystem_config;
-    pugi::xml_node node = App->LoadEmitters(psystem_config);
+    pugi::xml_node node = LoadEmitters(psystem_config);
     nameParticleAtlas = node.child("particleAtlas").attribute("name").as_string();
 
     for (pugi::xml_node emitters = node.child("particleAtlas").child("emitter");
@@ -30,6 +30,13 @@ bool ParticleSystem::Awake(pugi::xml_node& config)
             - The for loop already parses the xml file for you. Just search for the emitter type “fire”.
             - Once you find it use LoadEmitterData() to fill the vector. Use EMITTER_TYPE_FIRE for the enum.
             */
+        std::string emitterType = emitters.attribute("type").as_string();
+        if (emitterType == "fire") {
+            LoadEmitterData(emitters, EMITTER_TYPE_FIRE);
+            // TODO 2: Vytvoření a přidání emitteru do seznamu emiterů
+            // Použijte AddEmitter() metodu a předejte potřebné parametry, jako je pozice a typ emiteru
+            AddEmiter(fPoint(20.0f, 20.0f), EMITTER_TYPE_FIRE);
+        }
     }
     return ret;
 }
@@ -211,3 +218,22 @@ void ParticleSystem::LoadEmitterData(pugi::xml_node & emitter, EmitterType type)
 
     vecEmitterData[type] = tmp;
 }
+
+pugi::xml_node ParticleSystem::LoadEmitters(pugi::xml_document& psystem_file) const
+{
+    pugi::xml_node ret;
+
+    pugi::xml_parse_result result = psystem_file.load_file("psystem_config.xml");
+
+    /*if (result == NULL)
+        LOG("Could not load xml file config.xml. pugi error: %s", result.description());
+    else*/
+    ret = psystem_file.child("emitters");
+    return ret;
+}
+
+/*
+SDL_Texture* ParticleSystem::GetParticleAtlas() const
+{
+    return particleAtlas;
+}*/

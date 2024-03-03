@@ -76,7 +76,7 @@ bool Render::Awake(pugi::xml_node& config)
         else
         {
             //Get window surface
-           // screen_surface = SDL_GetWindowSurface(window);
+          // screen_surface = SDL_GetWindowSurface(window);
         }
     }
 
@@ -102,8 +102,8 @@ bool Render::Awake(pugi::xml_node& config)
     }
     else
     {
-        camera.w = 800;
-        camera.h = 600;
+        camera.w = 640;
+        camera.h = 480;
         camera.x = 0;
         camera.y = 0;
     }
@@ -114,7 +114,7 @@ bool Render::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Render::Start()
 {
-    //LOG("render start");
+    std::cout  << "render start" << std::endl;
     // back background
     torchTex = Load("textures/torch.png");
 
@@ -411,6 +411,7 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 
     if (result != 0)
     {
+        std::cerr << "Cannot draw quad to screen. SDL_RenderFillRect error: %s"<< SDL_GetError();
         //LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
         ret = false;
     }
