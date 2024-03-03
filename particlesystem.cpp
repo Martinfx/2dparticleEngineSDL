@@ -237,3 +237,7 @@ SDL_Texture* ParticleSystem::GetParticleAtlas() const
 {
     return particleAtlas;
 }*/
+
+std::list<Emitter*> ParticleSystem::getEmitterList() {
+    return emittersList;
+}

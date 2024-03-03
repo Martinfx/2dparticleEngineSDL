@@ -3,7 +3,7 @@
 #include <SDL2/SDL.h>
 #include "module.hpp"
 #include "emitter.hpp"
-
+#include "particlesystem.hpp"
 class Render : public Module
 {
 public:
@@ -72,6 +72,8 @@ private:
     SDL_Rect rect = { 0, 0, 400, 400 };
     SDL_Texture* torchTex = nullptr;
     std::list<SDL_Texture*>	textures;
+
+    ParticleSystem *psystem= nullptr;
 
 public:
 

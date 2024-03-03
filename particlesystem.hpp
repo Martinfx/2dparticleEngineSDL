@@ -82,6 +82,8 @@ public:
     // Called before quitting
     bool CleanUp();
 
+    std::list<Emitter*> getEmitterList();
+
     // Emitter methods
     Emitter* AddEmiter(fPoint pos, EmitterType type);
     bool RemoveEmitter(Emitter& emitter);

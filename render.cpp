@@ -15,11 +15,13 @@ Render::Render() : Module()
     background.g = 0;
     background.b = 0;
     background.a = 0;
+
+    psystem = new ParticleSystem();
 }
 
 Render::~Render()
 {
-
+    delete psystem;
 }
 
 
@@ -137,8 +139,9 @@ bool Render::Update(float dt)
     //    App->input->GetMousePosition(mx, my);
         fPoint poss((float)mxx, (float)myy);
      //   pos.y -= 230.0f;
-        ///eFire = App->psystem->AddEmiter(poss, EmitterType::EMITTER_TYPE_FIRE);
+        eFire = psystem->AddEmiter(poss, EmitterType::EMITTER_TYPE_FIRE);
     //}
+        psystem->Update(dt);
 
     int mx = 200, my = 300;
     //App->input->GetMousePosition(mx, my);
@@ -155,6 +158,20 @@ bool Render::Update(float dt)
         eFire->MoveEmitter(pos);
     }
 
+    std::list<Emitter*>::const_iterator it;
+    //it = psystem->getEmitterList();
+    for (it = psystem->getEmitterList().begin(); it != psystem->getEmitterList().end(); ++it)
+    {
+        // Získat aktuální stav emitteru (částice)
+        std::vector<Particle> particles = (*it)->GetParticles();
+
+        // Vykreslit částice emitteru
+        for (const auto& particle : particles)
+        {
+            // Vykreslit částici pomocí metody BlitParticle nebo jiné vhodné metody pro vykreslování textur
+            BlitParticle(particle.texture, particle.position.x, particle.position.y);
+        }
+    }
 
     return true;
 }
